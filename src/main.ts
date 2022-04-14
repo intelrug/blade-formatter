@@ -29,6 +29,7 @@ export interface FormatterOption {
   endWithNewline?: boolean;
   useTabs?: boolean;
   sortTailwindcssClasses?: true;
+  endOfLine?: string;
 }
 
 class BladeFormatter {

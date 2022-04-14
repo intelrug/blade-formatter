@@ -98,7 +98,14 @@ export default class Formatter {
 
   wrapLineLength: any;
 
+  endOfLine: string;
+
   constructor(options: any) {
+    const lineEndings: Record<string, string> = {
+      lf: '\n',
+      crlf: '\r\n',
+    };
+
     this.options = options;
     this.vsctm = util.optional(this.options).vsctm || vscodeTmModule;
     this.oniguruma = util.optional(this.options).oniguruma;
@@ -106,6 +113,7 @@ export default class Formatter {
     this.indentSize = util.optional(this.options).indentSize || 4;
     this.wrapLineLength = util.optional(this.options).wrapLineLength || 120;
     this.wrapAttributes = util.optional(this.options).wrapAttributes || 'auto';
+    this.endOfLine = lineEndings[util.optional(this.options).endOfLine] || os.EOL;
     this.currentIndentLevel = 0;
     this.shouldBeIndent = false;
     this.isInsideCommentBlock = false;
@@ -1392,7 +1400,7 @@ export default class Formatter {
       this.processLine(tokenizeLineResult, originalLine);
     }
 
-    return this.result.join(os.EOL);
+    return this.result.join(this.endOfLine);
   }
 
   processLine(tokenizeLineResult: any, originalLine: any) {

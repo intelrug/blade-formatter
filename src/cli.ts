@@ -83,6 +83,12 @@ export default async function cli() {
       description: 'Specify path of ignore file',
       default: null,
     })
+    .option('end-of-line', {
+      alias: ['endOfLine'],
+      type: 'string',
+      description: 'Line endings type',
+      default: null,
+    })
     .help('h')
     .alias('h', 'help')
     .epilog('Copyright Shuhei Hayashibara 2019');
