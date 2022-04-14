@@ -1,5 +1,5 @@
 {
-  "name": "blade-formatter",
+  "name": "@intelrug/blade-formatter",
   "engines": {
     "node": ">= 10.0.0"
   },
@@ -8,7 +8,7 @@
     "formatter",
     "laravel"
   ],
-  "version": "1.23.0",
+  "version": "1.24.0",
   "description": "An opinionated blade template formatter for Laravel",
   "main": "./dist/bundle.js",
   "types": "./dist/types/main.d.ts",
@@ -97,7 +97,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shufo/blade-formatter.git"
+    "url": "https://github.com/intelrug/blade-formatter.git"
   },
   "files": [
     "dist",
