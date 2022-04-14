@@ -100,6 +100,8 @@ export default class Formatter {
 
   endOfLine: string;
 
+  useTabs: boolean;
+
   constructor(options: any) {
     const lineEndings: Record<string, string> = {
       lf: '\n',
@@ -114,6 +116,7 @@ export default class Formatter {
     this.wrapLineLength = util.optional(this.options).wrapLineLength || 120;
     this.wrapAttributes = util.optional(this.options).wrapAttributes || 'auto';
     this.endOfLine = lineEndings[util.optional(this.options).endOfLine] || os.EOL;
+    this.useTabs = util.optional(this.options).useTabs || false;
     this.currentIndentLevel = 0;
     this.shouldBeIndent = false;
     this.isInsideCommentBlock = false;
@@ -800,10 +803,10 @@ export default class Formatter {
         let rawBlock = this.rawBlocks[p2];
 
         if (this.isInline(rawBlock) && this.isMultilineStatement(rawBlock)) {
-          rawBlock = util.formatStringAsPhp(`<?php\n${rawBlock}\n?>`).trim();
+          rawBlock = util.formatStringAsPhp(`<?php\n${rawBlock}\n?>`, this.useTabs).trim();
         } else if (rawBlock.split('\n').length > 1) {
           rawBlock = util
-            .formatStringAsPhp(`<?php${rawBlock}?>`)
+            .formatStringAsPhp(`<?php${rawBlock}?>`, this.useTabs)
             // @ts-expect-error ts-migrate(2554) FIXME: Expected 0 arguments, but got 1.
             .trimRight('\n');
         } else {
@@ -839,7 +842,7 @@ export default class Formatter {
   }
 
   isMultilineStatement(rawBlock: any) {
-    return util.formatStringAsPhp(`<?php${rawBlock}?>`).trimRight().split('\n').length > 1;
+    return util.formatStringAsPhp(`<?php${rawBlock}?>`, this.useTabs).trimRight().split('\n').length > 1;
   }
 
   indentRawBlock(spaces: any, content: any) {
@@ -1197,7 +1200,7 @@ export default class Formatter {
             }
 
             const result = util
-              .formatStringAsPhp(this.rawPhpTags[p1])
+              .formatStringAsPhp(this.rawPhpTags[p1], this.useTabs)
               .trim()
               // @ts-expect-error ts-migrate(2554) FIXME: Expected 0 arguments, but got 1.
               .trimRight('\n');

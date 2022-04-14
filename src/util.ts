@@ -37,13 +37,14 @@ export function splitByLines(content: any) {
   return content.split(/\r\n|\n|\r/);
 }
 
-export function formatStringAsPhp(content: any) {
+export function formatStringAsPhp(content: any, useTabs: boolean) {
   return prettier.format(content.replace(/\n$/, ''), {
     parser: 'php',
     printWidth: 1000,
     singleQuote: true,
     // @ts-ignore
     phpVersion: '8.0',
+    useTabs,
     plugins: [phpPlugin],
   });
 }
